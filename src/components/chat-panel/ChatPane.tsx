@@ -27,7 +27,11 @@ const ChatPane: React.FC = () => {
             <ChatMessages />
             <div ref={scrollRef} />
           </ChatScrollWrapper>
+
           <SubmitFormContainer>
+            {chatData?.otherPersonIsTyping && (
+              <div>Other person is typing!</div>
+            )}
             <SubmitMessageInput />
           </SubmitFormContainer>
         </>

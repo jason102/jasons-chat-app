@@ -17,24 +17,29 @@ export type ChatData = {
   sendMessageError: string;
   messages: DocumentData[];
   isSendingMessage: boolean;
+  otherPersonIsTyping: boolean;
 };
 
 export const ChatContext = createContext<ChatData | null>(null);
 
 const ChatProvider: React.FC = ({ children }) => {
   const messagesSnapshotUnsubscribe = useRef<Unsubscribe | null>(null);
+  const otherPersonIsTypingUnsubscribe = useRef<Unsubscribe | null>(null);
 
   const currentUserID = auth?.currentUser?.uid;
 
   const { otherUsers } = useLoadUsersList({
     currentUserID,
     messagesSnapshotUnsubscribe,
+    otherPersonIsTypingUnsubscribe,
   });
 
-  const { userToChatWith, selectUser, messages } = useSelectUser({
-    currentUserID,
-    messagesSnapshotUnsubscribe,
-  });
+  const { userToChatWith, selectUser, messages, otherPersonIsTyping } =
+    useSelectUser({
+      currentUserID,
+      messagesSnapshotUnsubscribe,
+      otherPersonIsTypingUnsubscribe,
+    });
 
   const {
     textToSend,
@@ -56,6 +61,7 @@ const ChatProvider: React.FC = ({ children }) => {
         sendMessageError,
         messages,
         isSendingMessage,
+        otherPersonIsTyping,
       }}
     >
       {children}

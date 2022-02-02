@@ -9,21 +9,27 @@ import {
   where,
   limit,
   Unsubscribe,
+  setDoc,
+  doc,
+  documentId,
 } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { db } from '../firebase';
 
 export const MAX_MESSAGES_PER_CHAT = 50;
+export const TYPING_DEBOUNCE_TIME = 1000;
 
 export type ChatHookParams = {
   currentUserID?: string;
   messagesSnapshotUnsubscribe: React.MutableRefObject<Unsubscribe | null>;
+  otherPersonIsTypingUnsubscribe: React.MutableRefObject<Unsubscribe | null>;
 };
 
 // Load the list of other users to chat with
 export const useLoadUsersList = ({
   currentUserID,
   messagesSnapshotUnsubscribe,
+  otherPersonIsTypingUnsubscribe,
 }: ChatHookParams) => {
   const [otherUsers, setOtherUsers] = useState<DocumentData[]>([]);
 
@@ -49,8 +55,16 @@ export const useLoadUsersList = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
         messagesSnapshotUnsubscribe.current();
       }
+      if (otherPersonIsTypingUnsubscribe.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        otherPersonIsTypingUnsubscribe.current();
+      }
     };
-  }, [currentUserID, messagesSnapshotUnsubscribe]);
+  }, [
+    currentUserID,
+    messagesSnapshotUnsubscribe,
+    otherPersonIsTypingUnsubscribe,
+  ]);
 
   return { otherUsers };
 };
@@ -58,11 +72,13 @@ export const useLoadUsersList = ({
 export const useSelectUser = ({
   currentUserID,
   messagesSnapshotUnsubscribe,
+  otherPersonIsTypingUnsubscribe,
 }: ChatHookParams) => {
   const [userToChatWith, setUserToChatWith] = useState<DocumentData | null>(
     null
   );
   const [messages, setMessages] = useState<DocumentData[]>([]);
+  const [otherPersonIsTyping, setOtherPersonIsTyping] = useState(false);
 
   const selectUser = async (user: DocumentData) => {
     const otherUserID = user.uid;
@@ -78,15 +94,12 @@ export const useSelectUser = ({
         ? `${currentUserID + otherUserID}`
         : `${otherUserID + currentUserID}`;
 
-    const msgsRef = collection(db, 'messages', id, 'chat');
-    const builtQuery = query(
-      msgsRef,
-      limit(MAX_MESSAGES_PER_CHAT),
-      orderBy('createdAt', 'desc')
-    );
-
     messagesSnapshotUnsubscribe.current = onSnapshot(
-      builtQuery,
+      query(
+        collection(db, 'messages', id, 'chat'),
+        limit(MAX_MESSAGES_PER_CHAT),
+        orderBy('createdAt', 'desc')
+      ),
       (querySnapshot) => {
         const snapshotMessages: DocumentData[] = [];
 
@@ -100,9 +113,23 @@ export const useSelectUser = ({
         setMessages(snapshotMessages);
       }
     );
+
+    otherPersonIsTypingUnsubscribe.current = onSnapshot(
+      query(collection(db, 'messages'), where(documentId(), '==', id)),
+      (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const conversationData = doc.data();
+          const otherPersonIsTypingKey = otherUserID + '_isTyping';
+
+          if (otherPersonIsTypingKey in conversationData) {
+            setOtherPersonIsTyping(conversationData[otherPersonIsTypingKey]);
+          }
+        });
+      }
+    );
   };
 
-  return { userToChatWith, selectUser, messages };
+  return { userToChatWith, selectUser, messages, otherPersonIsTyping };
 };
 
 export const useSendMessages = ({
@@ -115,10 +142,55 @@ export const useSendMessages = ({
   const [textToSend, setTextToSend] = useState('');
   const [isSendingMessage, setIsSendingMessage] = useState(false);
   const [sendMessageError, setSendMessageError] = useState('');
+  const isTyping = useRef(false);
+  const isTypingDebounceTimer = useRef(-1);
 
   const onTextEntered = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!userToChatWith || !currentUserID) {
+      return;
+    }
+
+    const otherUserID = userToChatWith?.uid;
+    const id =
+      currentUserID > otherUserID
+        ? `${currentUserID + otherUserID}`
+        : `${otherUserID + currentUserID}`;
+
     setSendMessageError('');
     setTextToSend(e.target.value);
+
+    if (!isTyping.current) {
+      isTyping.current = true;
+
+      try {
+        setDoc(
+          doc(db, 'messages', id),
+          {
+            [currentUserID + '_isTyping']: true,
+          },
+          { merge: true }
+        );
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    }
+
+    window.clearTimeout(isTypingDebounceTimer.current);
+    isTypingDebounceTimer.current = window.setTimeout(() => {
+      isTyping.current = false;
+
+      try {
+        setDoc(
+          doc(db, 'messages', id),
+          {
+            [currentUserID + '_isTyping']: false,
+          },
+          { merge: true }
+        );
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    }, TYPING_DEBOUNCE_TIME);
   };
 
   const onSendMessage = async (e: React.FormEvent) => {

@@ -28,6 +28,8 @@ const firebaseErrors: { [firebaseError: string]: string } = {
     'Password must be at least 6 characters',
   'Firebase: Error (auth/wrong-password).':
     'Password is invalid. Please try again.',
+  'Firebase: Error (auth/user-not-found).':
+    'User email not found. Please try again.',
 };
 
 const getErrorMessage = (error: any) => {
