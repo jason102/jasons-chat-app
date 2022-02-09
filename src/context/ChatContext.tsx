@@ -1,4 +1,5 @@
-import { DocumentData, Unsubscribe } from 'firebase/firestore';
+import { DocumentData, Unsubscribe as FSunsubscribe } from 'firebase/firestore';
+import { Unsubscribe as RTDBunsubscribe } from 'firebase/database';
 import React, { createContext, useRef } from 'react';
 import { auth } from '../firebase';
 import {
@@ -23,8 +24,8 @@ export type ChatData = {
 export const ChatContext = createContext<ChatData | null>(null);
 
 const ChatProvider: React.FC = ({ children }) => {
-  const messagesSnapshotUnsubscribe = useRef<Unsubscribe | null>(null);
-  const otherPersonIsTypingUnsubscribe = useRef<Unsubscribe | null>(null);
+  const messagesSnapshotUnsubscribe = useRef<FSunsubscribe | null>(null);
+  const otherPersonIsTypingUnsubscribe = useRef<RTDBunsubscribe | null>(null);
 
   const currentUserID = auth?.currentUser?.uid;
 

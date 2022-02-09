@@ -4,7 +4,7 @@ import {
 } from 'firebase/auth';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
-import { auth, db } from '../firebase';
+import { auth, firestoreDB } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
 export type RegistrationFormData = {
@@ -78,7 +78,7 @@ export const useRegistration = () => {
         password
       );
 
-      await setDoc(doc(db, 'users', result.user.uid), {
+      await setDoc(doc(firestoreDB, 'users', result.user.uid), {
         uid: result.user.uid,
         name,
         email,

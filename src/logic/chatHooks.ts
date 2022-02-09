@@ -8,21 +8,25 @@ import {
   Timestamp,
   where,
   limit,
-  Unsubscribe,
-  setDoc,
-  doc,
-  documentId,
+  Unsubscribe as FSunsubscribe,
 } from 'firebase/firestore';
 import React, { useEffect, useRef, useState } from 'react';
-import { db } from '../firebase';
+import { firestoreDB, realtimeDB } from '../firebase';
+import {
+  set,
+  ref,
+  onValue,
+  onDisconnect,
+  Unsubscribe as RTDBunsubscribe,
+} from 'firebase/database';
 
 export const MAX_MESSAGES_PER_CHAT = 50;
-export const TYPING_DEBOUNCE_TIME = 1000;
+export const TYPING_DEBOUNCE_TIME = 1500;
 
 export type ChatHookParams = {
   currentUserID?: string;
-  messagesSnapshotUnsubscribe: React.MutableRefObject<Unsubscribe | null>;
-  otherPersonIsTypingUnsubscribe: React.MutableRefObject<Unsubscribe | null>;
+  messagesSnapshotUnsubscribe: React.MutableRefObject<FSunsubscribe | null>;
+  otherPersonIsTypingUnsubscribe: React.MutableRefObject<RTDBunsubscribe | null>;
 };
 
 // Load the list of other users to chat with
@@ -34,7 +38,7 @@ export const useLoadUsersList = ({
   const [otherUsers, setOtherUsers] = useState<DocumentData[]>([]);
 
   useEffect(() => {
-    const usersRef = collection(db, 'users');
+    const usersRef = collection(firestoreDB, 'users');
 
     const builtQuery = query(usersRef, where('uid', 'not-in', [currentUserID]));
 
@@ -96,7 +100,7 @@ export const useSelectUser = ({
 
     messagesSnapshotUnsubscribe.current = onSnapshot(
       query(
-        collection(db, 'messages', id, 'chat'),
+        collection(firestoreDB, 'messages', id, 'chat'),
         limit(MAX_MESSAGES_PER_CHAT),
         orderBy('createdAt', 'desc')
       ),
@@ -114,19 +118,19 @@ export const useSelectUser = ({
       }
     );
 
-    otherPersonIsTypingUnsubscribe.current = onSnapshot(
-      query(collection(db, 'messages'), where(documentId(), '==', id)),
-      (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const conversationData = doc.data();
-          const otherPersonIsTypingKey = otherUserID + '_isTyping';
-
-          if (otherPersonIsTypingKey in conversationData) {
-            setOtherPersonIsTyping(conversationData[otherPersonIsTypingKey]);
-          }
-        });
+    // Show when the other person is typing
+    otherPersonIsTypingUnsubscribe.current = onValue(
+      ref(realtimeDB, 'conversations/' + id + '/' + otherUserID + '_isTyping'),
+      (snapshot) => {
+        const otherUserIsTyping = snapshot.val();
+        setOtherPersonIsTyping(otherUserIsTyping);
       }
     );
+
+    // Set the user to not typing if they close the app before the timeout has triggered
+    onDisconnect(
+      ref(realtimeDB, 'conversations/' + id + '/' + currentUserID + '_isTyping')
+    ).set(false);
   };
 
   return { userToChatWith, selectUser, messages, otherPersonIsTyping };
@@ -159,17 +163,16 @@ export const useSendMessages = ({
     setSendMessageError('');
     setTextToSend(e.target.value);
 
+    const conversationRef = ref(
+      realtimeDB,
+      'conversations/' + id + '/' + currentUserID + '_isTyping'
+    );
+
     if (!isTyping.current) {
       isTyping.current = true;
 
       try {
-        setDoc(
-          doc(db, 'messages', id),
-          {
-            [currentUserID + '_isTyping']: true,
-          },
-          { merge: true }
-        );
+        set(conversationRef, true);
       } catch (error: any) {
         console.log(error.message);
       }
@@ -180,13 +183,7 @@ export const useSendMessages = ({
       isTyping.current = false;
 
       try {
-        setDoc(
-          doc(db, 'messages', id),
-          {
-            [currentUserID + '_isTyping']: false,
-          },
-          { merge: true }
-        );
+        set(conversationRef, false);
       } catch (error: any) {
         console.log(error.message);
       }
@@ -210,7 +207,7 @@ export const useSendMessages = ({
         : `${otherUserID + currentUserID}`;
 
     try {
-      await addDoc(collection(db, 'messages', id, 'chat'), {
+      await addDoc(collection(firestoreDB, 'messages', id, 'chat'), {
         text: textToSend,
         from: currentUserID,
         to: otherUserID,
