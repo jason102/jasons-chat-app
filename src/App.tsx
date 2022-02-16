@@ -5,12 +5,12 @@ import NavigationBar from './components/NavigationBar';
 import { AppContainer } from './App.styles';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import AuthenticationProvider from './context/AuthenticationContext';
+import AuthProvider from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 
 const App: React.FC = () => {
   return (
-    <AuthenticationProvider>
+    <AuthProvider>
       <AppContainer>
         <BrowserRouter>
           <NavigationBar />
@@ -23,7 +23,7 @@ const App: React.FC = () => {
           </Routes>
         </BrowserRouter>
       </AppContainer>
-    </AuthenticationProvider>
+    </AuthProvider>
   );
 };
 

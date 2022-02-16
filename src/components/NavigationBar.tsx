@@ -4,10 +4,10 @@ import React, { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 import { Nav, Links } from './NavigationBar.styles';
-import { AuthenticationContext } from '../context/AuthenticationContext';
+import { AuthContext } from '../context/AuthContext';
 
 const NavigationBar: React.FC = () => {
-  const user = useContext(AuthenticationContext);
+  const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -18,7 +18,7 @@ const NavigationBar: React.FC = () => {
   };
 
   const LinkComponent = () => {
-    if (user) {
+    if (currentUser) {
       return <Button onClick={handleLogout}>Logout</Button>;
     }
 

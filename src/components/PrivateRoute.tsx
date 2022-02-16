@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { AuthenticationContext } from '../context/AuthenticationContext';
+import { AuthContext } from '../context/AuthContext';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const PrivateRoute: React.FC = () => {
-  const user = useContext(AuthenticationContext);
+  const { currentUser } = useContext(AuthContext);
 
-  if (user) {
+  if (currentUser) {
     return <Outlet />;
   }
 
