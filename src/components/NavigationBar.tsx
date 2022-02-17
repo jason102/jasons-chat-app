@@ -35,6 +35,7 @@ const NavigationBar: React.FC = () => {
         <Link to='/'>{`Jason's Chat App`}</Link>
       </h3>
       <Links>
+        <Link to='/about'>About</Link>
         <LinkComponent />
       </Links>
     </Nav>

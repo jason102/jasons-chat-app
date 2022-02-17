@@ -5,7 +5,7 @@ import {
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
 import { auth, firestoreDB } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export type RegistrationFormData = {
   name: string;
@@ -42,6 +42,9 @@ const getErrorMessage = (error: any) => {
 
 export const useRegistration = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const fromPage = (location.state as any)?.from?.pathname || '/';
 
   const [formData, setFormData] = useState<RegistrationFormData>({
     name: '',
@@ -93,7 +96,7 @@ export const useRegistration = () => {
         loading: false,
       });
 
-      navigate('/');
+      navigate(fromPage, { replace: true });
     } catch (firebaseError: any) {
       setFormData((prevFormData) => ({
         ...prevFormData,
@@ -108,6 +111,9 @@ export const useRegistration = () => {
 
 export const useLogin = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const fromPage = (location.state as any)?.from?.pathname || '/';
 
   const [formData, setFormData] = useState<LoginFormData>({
     email: '',
@@ -146,7 +152,7 @@ export const useLogin = () => {
         loading: false,
       });
 
-      navigate('/');
+      navigate(fromPage, { replace: true });
     } catch (firebaseError: any) {
       setFormData((prevFormData) => ({
         ...prevFormData,
