@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { ChatContext } from '../../context/ChatContext';
 import useNewMessageScrolling from '../../logic/useNewMessageScrolling';
+import BouncingDots from '../BouncingDots';
 import ChatMessages from './ChatMessages';
 import {
   ChatScrollWrapper,
@@ -27,11 +28,8 @@ const ChatPane: React.FC = () => {
             <ChatMessages />
             <div ref={scrollRef} />
           </ChatScrollWrapper>
-
           <SubmitFormContainer>
-            {chatData?.otherPersonIsTyping && (
-              <div>Other person is typing!</div>
-            )}
+            {chatData?.otherPersonIsTyping && <BouncingDots />}
             <SubmitMessageInput />
           </SubmitFormContainer>
         </>
