@@ -1,20 +1,46 @@
-import { DocumentData } from 'firebase/firestore';
-import React, { useContext } from 'react';
-import { ChatContext } from '../../context/ChatContext';
-import OtherUser from './OtherUser';
+import React, { useContext, useEffect } from 'react';
+import OtherFriend from './OtherFriend';
 import { Container, UsersListMessage } from './UsersList.styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { firestoreDB } from '../../firebase';
+import { AuthContext } from '../../context/AuthContext';
+import { OtherUser, setMyFriends } from '../../redux/slices/otherUsersSlice';
 
 const UsersList: React.FC = () => {
-  const chatData = useContext(ChatContext);
+  const dispatch: AppDispatch = useDispatch();
+  const { currentUserId } = useContext(AuthContext);
+  const { myFriends } = useSelector((state: RootState) => state.otherUsers);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      query(
+        collection(firestoreDB, 'users'),
+        where('uid', 'not-in', [currentUserId])
+      ),
+      (querySnapshot) => {
+        const users: OtherUser[] = [];
+
+        querySnapshot.forEach((doc) => {
+          const { createdAt, ...rest } = doc.data();
+          users.push(rest as OtherUser);
+        });
+
+        dispatch(setMyFriends(users));
+      }
+    );
+
+    return () => unsubscribe();
+  }, [currentUserId, dispatch]);
 
   return (
     <Container>
       <UsersListMessage>User Chat List:</UsersListMessage>
-      {chatData?.otherUsers &&
-        chatData.otherUsers.map((user: DocumentData) => (
-          <OtherUser key={user.uid} user={user} />
-        ))}
-      {chatData?.otherUsers && chatData.otherUsers.length === 0 && (
+      {myFriends.map((user: OtherUser) => (
+        <OtherFriend key={user.uid} user={user} />
+      ))}
+      {myFriends.length === 0 && (
         <UsersListMessage>Loading users...</UsersListMessage>
       )}
     </Container>

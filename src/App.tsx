@@ -9,42 +9,46 @@ import About from './pages/About';
 import AuthProvider from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import PublicOnlyRoute from './components/PublicOnlyRoute';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 const App: React.FC = () => (
-  <AuthProvider>
-    <AppContainer>
-      <BrowserRouter>
-        <NavigationBar />
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <PrivateRoute>
-                <ChatPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path='/register'
-            element={
-              <PublicOnlyRoute>
-                <Register />
-              </PublicOnlyRoute>
-            }
-          />
-          <Route
-            path='/login'
-            element={
-              <PublicOnlyRoute>
-                <Login />
-              </PublicOnlyRoute>
-            }
-          />
-          <Route path='/about' element={<About />} />
-        </Routes>
-      </BrowserRouter>
-    </AppContainer>
-  </AuthProvider>
+  <Provider store={store}>
+    <AuthProvider>
+      <AppContainer>
+        <BrowserRouter>
+          <NavigationBar />
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <PrivateRoute>
+                  <ChatPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path='/register'
+              element={
+                <PublicOnlyRoute>
+                  <Register />
+                </PublicOnlyRoute>
+              }
+            />
+            <Route
+              path='/login'
+              element={
+                <PublicOnlyRoute>
+                  <Login />
+                </PublicOnlyRoute>
+              }
+            />
+            <Route path='/about' element={<About />} />
+          </Routes>
+        </BrowserRouter>
+      </AppContainer>
+    </AuthProvider>
+  </Provider>
 );
 
 export default App;

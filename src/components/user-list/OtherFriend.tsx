@@ -7,7 +7,7 @@ interface Props {
   user: DocumentData;
 }
 
-const OtherUser: React.FC<Props> = ({ user }) => {
+const OtherFriend: React.FC<Props> = ({ user }) => {
   const chatData = useContext(ChatContext);
 
   return (
@@ -15,4 +15,4 @@ const OtherUser: React.FC<Props> = ({ user }) => {
   );
 };
 
-export default OtherUser;
+export default OtherFriend;
