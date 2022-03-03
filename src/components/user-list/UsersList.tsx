@@ -6,12 +6,12 @@ import { AppDispatch, RootState } from '../../redux/store';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { firestoreDB } from '../../firebase';
 import { AuthContext } from '../../context/AuthContext';
-import { OtherUser, setMyFriends } from '../../redux/slices/otherUsersSlice';
+import { OtherUser, setMyFriends } from '../../redux/slices/usersSlice';
 
 const UsersList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const { currentUserId } = useContext(AuthContext);
-  const { myFriends } = useSelector((state: RootState) => state.otherUsers);
+  const { myFriends } = useSelector((state: RootState) => state.users);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(

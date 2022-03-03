@@ -6,18 +6,18 @@ export interface OtherUser {
   name: string;
 }
 
-interface OtherUsersState {
+interface UsersState {
   myFriends: OtherUser[];
   myFriendRequests: OtherUser[];
 }
 
-const initialState: OtherUsersState = {
+const initialState: UsersState = {
   myFriends: [],
   myFriendRequests: [],
 };
 
-const otherUsersSlice = createSlice({
-  name: 'otherUsers',
+const usersSlice = createSlice({
+  name: 'users',
   initialState,
   reducers: {
     setMyFriends(state, { payload: myFriends }: PayloadAction<OtherUser[]>) {
@@ -32,7 +32,7 @@ const otherUsersSlice = createSlice({
   },
 });
 
-const { actions, reducer } = otherUsersSlice;
+const { actions, reducer } = usersSlice;
 
 export const { setMyFriends, setMyFriendRequests } = actions;
 
