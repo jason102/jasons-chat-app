@@ -1,10 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export interface OtherUser {
-  uid: string;
-  email: string;
-  name: string;
-}
+import { OtherUser } from '../../types';
 
 interface UsersState {
   myFriends: OtherUser[];

@@ -10,7 +10,7 @@ import {
   ErrorMessage,
   OtherAuthPageLink,
 } from '../components/AuthPages.styles';
-import { LoginFormData, useLogin } from '../logic/authHooks';
+import { LoginFormData, useLogin } from '../hooks/authHooks';
 
 const Login: React.FC = () => {
   const { formData, setFormData, handleSubmit } = useLogin();

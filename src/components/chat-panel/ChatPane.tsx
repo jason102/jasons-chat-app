@@ -1,6 +1,8 @@
-import React, { useContext } from 'react';
-import { ChatContext } from '../../context/ChatContext';
-import useNewMessageScrolling from '../../logic/useNewMessageScrolling';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import useNewMessageScrolling from '../../hooks/useNewMessageScrolling';
+import useOtherPersonIsTyping from '../../hooks/useOtherPersonIsTyping';
+import { RootState } from '../../redux/store';
 import BouncingDots from '../BouncingDots';
 import ChatMessages from './ChatMessages';
 import {
@@ -12,24 +14,29 @@ import {
 import SubmitMessageInput from './SubmitMessageInput';
 
 const ChatPane: React.FC = () => {
-  const chatData = useContext(ChatContext);
+  const {
+    userToChatWith: { uid: otherUserId, name: otherUserName },
+  } = useSelector((state: RootState) => state.conversation);
+  const hasSelectedOtherUser = otherUserId.length > 0;
+
   const { scrollRef, onScroll } = useNewMessageScrolling();
+  const { otherPersonIsTyping } = useOtherPersonIsTyping();
 
   return (
     <ChatContainer>
       <UserToChatWithName>
-        {chatData?.userToChatWith
-          ? chatData.userToChatWith.name
+        {hasSelectedOtherUser
+          ? otherUserName
           : 'Select a user on the left to chat with!'}
       </UserToChatWithName>
-      {chatData?.userToChatWith && (
+      {hasSelectedOtherUser && (
         <>
           <ChatScrollWrapper onScroll={onScroll}>
             <ChatMessages />
             <div ref={scrollRef} />
           </ChatScrollWrapper>
           <SubmitFormContainer>
-            {chatData?.otherPersonIsTyping && <BouncingDots />}
+            {otherPersonIsTyping && <BouncingDots />}
             <SubmitMessageInput />
           </SubmitFormContainer>
         </>

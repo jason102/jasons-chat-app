@@ -6,7 +6,7 @@ import {
   useLoadUsersList,
   useSelectUser,
   useSendMessages,
-} from '../logic/chatHooks';
+} from '../hooks/chatHooks';
 
 export type ChatData = {
   otherUsers: DocumentData[];

@@ -6,7 +6,8 @@ import { AppDispatch, RootState } from '../../redux/store';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { firestoreDB } from '../../firebase';
 import { AuthContext } from '../../context/AuthContext';
-import { OtherUser, setMyFriends } from '../../redux/slices/usersSlice';
+import { setMyFriends } from '../../redux/slices/usersSlice';
+import { OtherUser } from '../../types';
 
 const UsersList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();

@@ -10,7 +10,7 @@ import {
   ErrorMessage,
   OtherAuthPageLink,
 } from '../components/AuthPages.styles';
-import { RegistrationFormData, useRegistration } from '../logic/authHooks';
+import { RegistrationFormData, useRegistration } from '../hooks/authHooks';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();

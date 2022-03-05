@@ -19,6 +19,12 @@ import {
   onDisconnect,
   Unsubscribe as RTDBunsubscribe,
 } from 'firebase/database';
+import {
+  setMessages as setMessagesInRedux,
+  setUserToChatWith as setUserToChatWithRedux,
+} from '../redux/slices/conversationSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../redux/store';
 
 export const MAX_MESSAGES_PER_CHAT = 50;
 export const TYPING_DEBOUNCE_TIME = 1500;
@@ -78,6 +84,8 @@ export const useSelectUser = ({
   messagesSnapshotUnsubscribe,
   otherPersonIsTypingUnsubscribe,
 }: ChatHookParams) => {
+  const dispatch: AppDispatch = useDispatch();
+
   const [userToChatWith, setUserToChatWith] = useState<DocumentData | null>(
     null
   );
@@ -92,6 +100,12 @@ export const useSelectUser = ({
     }
 
     setUserToChatWith(user);
+    const reduxUser = {
+      uid: user.uid,
+      name: user.name,
+      email: user.email,
+    };
+    dispatch(setUserToChatWithRedux(reduxUser));
 
     const id =
       currentUserID > otherUserID
@@ -115,6 +129,13 @@ export const useSelectUser = ({
         snapshotMessages.reverse();
 
         setMessages(snapshotMessages);
+
+        const reduxMessages = snapshotMessages.map(({ to, from, text }) => ({
+          to,
+          from,
+          text,
+        }));
+        dispatch(setMessagesInRedux(reduxMessages));
       }
     );
 

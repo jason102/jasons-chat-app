@@ -1,6 +1,7 @@
 import { useRef, useEffect, useContext } from 'react';
-import { ChatContext } from '../context/ChatContext';
-import { auth } from '../firebase';
+import { useSelector } from 'react-redux';
+import { AuthContext } from '../context/AuthContext';
+import { RootState } from '../redux/store';
 
 // https://stackoverflow.com/questions/10787782/full-height-of-a-html-element-div-including-border-padding-and-margin
 const getAbsoluteHeight = (el: HTMLElement | null) => {
@@ -19,24 +20,24 @@ const getAbsoluteHeight = (el: HTMLElement | null) => {
 // Scroll down when a new message is shown if the user is scrolled
 // all the way down to the bottom of the div or they themselves sent the message
 export const useNewMessageScrolling = () => {
-  const chatData = useContext(ChatContext);
+  const { currentUserId } = useContext(AuthContext);
+  const { messages } = useSelector((state: RootState) => state.conversation);
+
   const isAtBottom = useRef(true);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!chatData || chatData.messages.length === 0) {
+    if (messages.length === 0) {
       return;
     }
 
-    const isFromMe =
-      chatData.messages[chatData.messages.length - 1].from ===
-      auth?.currentUser?.uid;
+    const isFromMe = messages[messages.length - 1].from === currentUserId;
 
     if (isAtBottom.current || isFromMe) {
       scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [chatData, chatData?.messages]);
+  }, [currentUserId, messages]);
 
   const onScroll = (e: React.UIEvent<HTMLElement>) => {
     const divElement = e.currentTarget;

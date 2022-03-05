@@ -1,16 +1,17 @@
-import { DocumentData } from 'firebase/firestore';
-import React, { useContext } from 'react';
-import { ChatContext } from '../../context/ChatContext';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { Message } from '../../types';
 import { ChatMessagesContainer } from './ChatMessages.styles';
-import Message from './Message';
+import MessageContainer from './Message';
 
 const ChatMessages: React.FC = () => {
-  const chatData = useContext(ChatContext);
+  const { messages } = useSelector((state: RootState) => state.conversation);
 
   return (
     <ChatMessagesContainer>
-      {chatData?.messages.map((message: DocumentData) => {
-        return <Message key={message.createdAt} message={message} />;
+      {messages.map((message: Message, index: number) => {
+        return <MessageContainer key={index} message={message} />;
       })}
     </ChatMessagesContainer>
   );
