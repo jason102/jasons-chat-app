@@ -1,18 +1,16 @@
 import { Button } from '@mui/material';
-import { DocumentData } from 'firebase/firestore';
-import React, { useContext } from 'react';
-import { ChatContext } from '../../context/ChatContext';
+import React from 'react';
+import { OtherUser } from '../../types';
+import useSelectUser from './useSelectUser';
 
 interface Props {
-  user: DocumentData;
+  user: OtherUser;
 }
 
 const OtherFriend: React.FC<Props> = ({ user }) => {
-  const chatData = useContext(ChatContext);
+  const { onSelectUser } = useSelectUser();
 
-  return (
-    <Button onClick={() => chatData?.selectUser(user)}>{user.name}</Button>
-  );
+  return <Button onClick={() => onSelectUser(user)}>{user.name}</Button>;
 };
 
 export default OtherFriend;
