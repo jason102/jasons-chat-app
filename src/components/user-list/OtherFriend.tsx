@@ -8,9 +8,9 @@ interface Props {
 }
 
 const OtherFriend: React.FC<Props> = ({ user }) => {
-  const { onSelectUser } = useSelectUser();
+  const { onSelectUser } = useSelectUser(user);
 
-  return <Button onClick={() => onSelectUser(user)}>{user.name}</Button>;
+  return <Button onClick={onSelectUser}>{user.name}</Button>;
 };
 
 export default OtherFriend;

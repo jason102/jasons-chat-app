@@ -4,8 +4,9 @@ import {
   onSnapshot,
   orderBy,
   query,
+  Unsubscribe,
 } from 'firebase/firestore';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthContext } from '../../context/AuthContext';
 import { firestoreDB } from '../../firebase';
@@ -18,14 +19,16 @@ import { Message, OtherUser } from '../../types';
 
 export const MAX_MESSAGES_PER_CHAT = 50;
 
-const useSelectUser = () => {
+const useSelectUser = (selectedUser: OtherUser) => {
   const { currentUserId } = useContext(AuthContext);
   const dispatch: AppDispatch = useDispatch();
   const {
     userToChatWith: { uid: currentOtherUserId },
   } = useSelector((state: RootState) => state.conversation);
 
-  const onSelectUser = (selectedUser: OtherUser) => {
+  let unsubscribe: Unsubscribe | null = null;
+
+  const onSelectUser = () => {
     const selectedUserId = selectedUser.uid;
 
     if (selectedUserId === currentOtherUserId) {
@@ -39,7 +42,7 @@ const useSelectUser = () => {
         ? `${currentUserId + selectedUserId}`
         : `${selectedUserId + currentUserId}`;
 
-    onSnapshot(
+    unsubscribe = onSnapshot(
       query(
         collection(firestoreDB, 'messages', chatId, 'chat'),
         limit(MAX_MESSAGES_PER_CHAT),
@@ -60,6 +63,15 @@ const useSelectUser = () => {
       }
     );
   };
+
+  useEffect(
+    () => () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    },
+    [unsubscribe]
+  );
 
   return { onSelectUser };
 };
