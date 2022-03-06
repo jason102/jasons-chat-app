@@ -16,8 +16,8 @@ const useOtherPersonIsTyping = () => {
   useEffect(() => {
     const id =
       currentUserId > otherUserId
-        ? `${currentUserId + otherUserId}`
-        : `${otherUserId + currentUserId}`;
+        ? currentUserId + otherUserId
+        : otherUserId + currentUserId;
 
     // Show when the other person is typing
     const unsubscribe = onValue(
