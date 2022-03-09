@@ -36,8 +36,8 @@ const useSelectUser = (selectedUser: OtherUser) => {
 
     const chatId =
       currentUserId > selectedUserId
-        ? `${currentUserId + selectedUserId}`
-        : `${selectedUserId + currentUserId}`;
+        ? currentUserId + selectedUserId
+        : selectedUserId + currentUserId;
 
     unsubscribe = onSnapshot(
       query(
