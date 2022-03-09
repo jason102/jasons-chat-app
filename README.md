@@ -1,6 +1,6 @@
 # Jason's Chat App
 
-This is a Typescript [Create React App](https://github.com/facebook/create-react-app) using Firebase 9 for the backend of which the first commit's code in this repo was created in about a day's time. It is deployed to Vercel [here](https://jasons-chat-app.vercel.app/login).
+This is a Typescript [Create React App](https://github.com/facebook/create-react-app) using Firebase for the backend of which the first commit's code in this repo was created in about a day's time. It is deployed to Vercel [here](https://jasons-chat-app.vercel.app/login).
 
 It is a multi-user text-based chat app. You can register an account and then select and chat with the other users who have registered. The app has public and private pages and you must be logged in to access the chat page.
 
@@ -12,8 +12,9 @@ The project dependencies are managed by `yarn`.
 
 1. Clone the project.
 2. Install dependencies by simply running `yarn`.
-3. Create a new Google Firebase project: [https://console.firebase.google.com/](https://console.firebase.google.com/).
-4. Go to the new Firebase project's settings and scroll down to find the `firebaseConfig` sample JS code with all the API key/config data. Looks like this:
+3. Create a new Web Google Firebase project: [https://console.firebase.google.com/](https://console.firebase.google.com/).
+4. Create and enable both the `Firestore Database` and `Realtime Database`.
+5. Under the Firebase project's settings, and scroll down to find the `firebaseConfig` sample JS code with all the API key/config data. Looks like this:
 
 ```
 const firebaseConfig = {
@@ -22,7 +23,8 @@ const firebaseConfig = {
   projectId: "xxx",
   storageBucket: "xxx",
   messagingSenderId: "xxx",
-  appId: "xxx"
+  appId: "xxx",
+  databaseURL: "xxx"
 };
 ```
 
@@ -31,28 +33,16 @@ const firebaseConfig = {
 ```
 REACT_APP_FIREBASE_API_KEY=xxx
 REACT_APP_FIREBASE_AUTH_DOMAIN=xxx
-REACT_APP_FIREBASE_DATABASE_URL=xxx
 REACT_APP_FIREBASE_PROJECT_ID=xxx
+REACT_APP_FIREBASE_STORAGE_BUCKET=xxx
 REACT_APP_FIREBASE_MESSAGING_SENDER_ID=xxx
 REACT_APP_FIREBASE_APP_ID=xxx
+REACT_APP_FIREBASE_DATABASE_URL=xxx
 ```
 
 Then `src/firebase.ts` should be able to read them when you run the project.
 
-6. Go to the `Firebase Database` left-side tab in your Firebase project console online and click on the `Rules` tab. Change your rules code to be:
-
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true;
-    }
-  }
-}
-```
-
-7. Run `yarn start` to launch the project locally in your web browser.
+7. Run `yarn start` to launch the project locally in your web browser. If you get a Firebase error, check the `Rules` tab of both the `Firestore Database` and `Realtime Database` to make sure the project has the read/write permissions setup correctly.
 
 ## Contributing/setup for local development
 

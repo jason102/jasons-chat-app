@@ -41,6 +41,7 @@ const Login: React.FC = () => {
             value={email}
             disabled={loading}
             onChange={handleChange}
+            autoComplete='email'
           />
         </TextContainer>
         <TextContainer>
@@ -52,6 +53,7 @@ const Login: React.FC = () => {
             value={password}
             onChange={handleChange}
             disabled={loading}
+            autoComplete='current-password'
           />
         </TextContainer>
         {error && <ErrorMessage>{error}</ErrorMessage>}

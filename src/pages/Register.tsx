@@ -42,6 +42,7 @@ const Register: React.FC = () => {
             value={name}
             disabled={loading}
             onChange={handleChange}
+            autoComplete='username'
           />
         </TextContainer>
         <TextContainer>
@@ -52,6 +53,7 @@ const Register: React.FC = () => {
             value={email}
             disabled={loading}
             onChange={handleChange}
+            autoComplete='email'
           />
         </TextContainer>
         <TextContainer>
@@ -63,6 +65,7 @@ const Register: React.FC = () => {
             value={password}
             onChange={handleChange}
             disabled={loading}
+            autoComplete='current-password'
           />
         </TextContainer>
         {error && <ErrorMessage>{error}</ErrorMessage>}

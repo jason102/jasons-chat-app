@@ -88,14 +88,6 @@ export const useRegistration = () => {
         createdAt: Timestamp.fromDate(new Date()),
       });
 
-      setFormData({
-        name: '',
-        email: '',
-        password: '',
-        error: null,
-        loading: false,
-      });
-
       navigate(fromPage, { replace: true });
     } catch (firebaseError: any) {
       setFormData((prevFormData) => ({
@@ -144,13 +136,6 @@ export const useLogin = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-
-      setFormData({
-        email: '',
-        password: '',
-        error: null,
-        loading: false,
-      });
 
       navigate(fromPage, { replace: true });
     } catch (firebaseError: any) {
