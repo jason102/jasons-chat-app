@@ -2,9 +2,9 @@ import { Button } from '@mui/material';
 import { signOut } from 'firebase/auth';
 import React, { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { auth } from '../firebase';
+import { auth } from 'firebaseConfig';
 import { Nav, Links } from './NavigationBar.styles';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from 'context/AuthContext';
 
 const NavigationBar: React.FC = () => {
   const { currentUser } = useContext(AuthContext);

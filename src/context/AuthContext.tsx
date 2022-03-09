@@ -1,7 +1,7 @@
 import { onAuthStateChanged, User } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
-import { LoadingPageContainer } from '../components/AuthPages.styles';
-import { auth } from '../firebase';
+import { LoadingPageContainer } from 'components/AuthPages.styles';
+import { auth } from 'firebaseConfig';
 
 export const AuthContext = createContext<{
   currentUser: User | null;

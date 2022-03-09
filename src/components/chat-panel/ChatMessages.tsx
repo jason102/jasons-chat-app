@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { Message } from '../../types';
+import { RootState } from 'redux/store';
+import { Message } from 'types';
 import { ChatMessagesContainer } from './ChatMessages.styles';
 import MessageContainer from './Message';
 

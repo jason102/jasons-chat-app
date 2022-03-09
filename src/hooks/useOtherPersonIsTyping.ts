@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
-import { realtimeDB } from '../firebase';
+import { realtimeDB } from 'firebaseConfig';
 import { ref, onValue, onDisconnect } from 'firebase/database';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from 'context/AuthContext';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { RootState } from 'redux/store';
 
 const useOtherPersonIsTyping = () => {
   const { currentUserId } = useContext(AuthContext);

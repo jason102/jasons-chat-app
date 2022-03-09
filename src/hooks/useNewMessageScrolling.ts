@@ -1,7 +1,7 @@
 import { useRef, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { AuthContext } from '../context/AuthContext';
-import { RootState } from '../redux/store';
+import { AuthContext } from 'context/AuthContext';
+import { RootState } from 'redux/store';
 
 // https://stackoverflow.com/questions/10787782/full-height-of-a-html-element-div-including-border-padding-and-margin
 const getAbsoluteHeight = (el: HTMLElement | null) => {

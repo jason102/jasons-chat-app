@@ -9,8 +9,8 @@ import {
   SubmitButtonContainer,
   ErrorMessage,
   OtherAuthPageLink,
-} from '../components/AuthPages.styles';
-import { LoginFormData, useLogin } from '../hooks/authHooks';
+} from 'components/AuthPages.styles';
+import { LoginFormData, useLogin } from 'hooks/authHooks';
 
 const Login: React.FC = () => {
   const { formData, setFormData, handleSubmit } = useLogin();

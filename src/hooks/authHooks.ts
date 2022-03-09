@@ -4,7 +4,7 @@ import {
 } from 'firebase/auth';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
-import { auth, firestoreDB } from '../firebase';
+import { auth, firestoreDB } from 'firebaseConfig';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export type RegistrationFormData = {

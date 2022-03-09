@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Message, OtherUser } from '../../types';
+import { Message, OtherUser } from 'types';
 
 const EMPTY_USER: OtherUser = {
   uid: '',

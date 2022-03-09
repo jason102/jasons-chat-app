@@ -40,7 +40,7 @@ REACT_APP_FIREBASE_APP_ID=xxx
 REACT_APP_FIREBASE_DATABASE_URL=xxx
 ```
 
-Then `src/firebase.ts` should be able to read them when you run the project.
+Then `src/firebaseConfig.ts` should be able to read them when you run the project.
 
 7. Run `yarn start` to launch the project locally in your web browser. If you get a Firebase error, check the `Rules` tab of both the `Firestore Database` and `Realtime Database` to make sure the project has the read/write permissions setup correctly.
 

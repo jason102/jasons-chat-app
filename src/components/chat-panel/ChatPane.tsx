@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import useNewMessageScrolling from '../../hooks/useNewMessageScrolling';
-import useOtherPersonIsTyping from '../../hooks/useOtherPersonIsTyping';
-import { RootState } from '../../redux/store';
-import BouncingDots from '../BouncingDots';
+import useNewMessageScrolling from 'hooks/useNewMessageScrolling';
+import useOtherPersonIsTyping from 'hooks/useOtherPersonIsTyping';
+import { RootState } from 'redux/store';
+import BouncingDots from 'components/BouncingDots';
 import ChatMessages from './ChatMessages';
 import {
   ChatScrollWrapper,

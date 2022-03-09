@@ -1,6 +1,6 @@
 import { DocumentData } from 'firebase/firestore';
 import React from 'react';
-import { auth } from '../../firebase';
+import { auth } from 'firebaseConfig';
 import {
   MessageFromFriend,
   MessageFromMe,

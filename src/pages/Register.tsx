@@ -9,8 +9,8 @@ import {
   SubmitButtonContainer,
   ErrorMessage,
   OtherAuthPageLink,
-} from '../components/AuthPages.styles';
-import { RegistrationFormData, useRegistration } from '../hooks/authHooks';
+} from 'components/AuthPages.styles';
+import { RegistrationFormData, useRegistration } from 'hooks/authHooks';
 
 const Register: React.FC = () => {
   const navigate = useNavigate();

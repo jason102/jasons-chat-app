@@ -1,16 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ChatPage from './pages/Chat';
-import NavigationBar from './components/NavigationBar';
+import ChatPage from 'pages/Chat';
+import NavigationBar from 'components/NavigationBar';
 import { AppContainer } from './App.styles';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import About from './pages/About';
-import AuthProvider from './context/AuthContext';
-import PrivateRoute from './components/PrivateRoute';
-import PublicOnlyRoute from './components/PublicOnlyRoute';
+import Register from 'pages/Register';
+import Login from 'pages/Login';
+import About from 'pages/About';
+import AuthProvider from 'context/AuthContext';
+import PrivateRoute from 'components/PrivateRoute';
+import PublicOnlyRoute from 'components/PublicOnlyRoute';
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import store from 'redux/store';
 
 const App: React.FC = () => (
   <Provider store={store}>

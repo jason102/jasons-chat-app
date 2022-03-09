@@ -1,10 +1,10 @@
 import { addDoc, collection, Timestamp } from 'firebase/firestore';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { firestoreDB, realtimeDB } from '../../firebase';
+import { firestoreDB, realtimeDB } from 'firebaseConfig';
 import { set, ref } from 'firebase/database';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from 'context/AuthContext';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { RootState } from 'redux/store';
 
 const TYPING_DEBOUNCE_TIME = 1500;
 

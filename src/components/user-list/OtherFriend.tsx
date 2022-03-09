@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import React from 'react';
-import { OtherUser } from '../../types';
+import { OtherUser } from 'types';
 import useSelectUser from './useSelectUser';
 
 interface Props {

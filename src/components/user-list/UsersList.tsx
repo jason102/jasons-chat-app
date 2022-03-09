@@ -2,12 +2,12 @@ import React, { useContext, useEffect } from 'react';
 import OtherFriend from './OtherFriend';
 import { Container, UsersListMessage } from './UsersList.styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../redux/store';
+import { AppDispatch, RootState } from 'redux/store';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { firestoreDB } from '../../firebase';
-import { AuthContext } from '../../context/AuthContext';
-import { setMyFriends } from '../../redux/slices/usersSlice';
-import { OtherUser } from '../../types';
+import { firestoreDB } from 'firebaseConfig';
+import { AuthContext } from 'context/AuthContext';
+import { setMyFriends } from 'redux/slices/usersSlice';
+import { OtherUser } from 'types';
 
 const UsersList: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
