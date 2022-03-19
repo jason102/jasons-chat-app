@@ -1,33 +1,31 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { TextField, IconButton, Typography } from '@mui/material';
-// import { ClosePanelHeader } from './InviteFriendPanel.styles';
+import { ClosePanelHeader } from './InviteFriendPanel.styles';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {
+  TextField,
+  IconButton,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from '@mui/material';
 
 interface Props {
   toggleOpenInvitePanel: VoidFunction;
 }
 
 const InviteFriendPanel: React.FC<Props> = ({ toggleOpenInvitePanel }) => {
-  // Animation: Slide/fade in from the right side of the screen for opening the panel (closing the panel is the opposite)
   return (
-    <motion.div
-      key='InviteFriendPanel'
-      initial={{ opacity: 0, x: '-100%' }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: '-100%' }}
-      transition={{ duration: 0.25 }}
-    >
-      <div
-        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-      >
+    <>
+      <ClosePanelHeader>
         <IconButton onClick={toggleOpenInvitePanel} edge='start'>
           <ArrowBackIcon />
         </IconButton>
         <Typography id='modal-modal-title' variant='h6' component='h2'>
           Add a friend
         </Typography>
-      </div>
+      </ClosePanelHeader>
       <Typography id='modal-modal-description' sx={{ mt: 2 }}>
         Send a chat invite to any registered user by entering their email
         address:
@@ -39,7 +37,35 @@ const InviteFriendPanel: React.FC<Props> = ({ toggleOpenInvitePanel }) => {
         size='small'
         fullWidth
       />
-    </motion.div>
+      <Accordion
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls='panel2a-content'
+          id='panel2a-header'
+        >
+          <Typography>Friend requests</Typography>
+        </AccordionSummary>
+        <AccordionDetails
+          sx={{
+            display: 'flex',
+            flex: 1,
+            flexDirection: 'column',
+            maxHeight: '200px',
+            overflowY: 'auto',
+          }}
+        >
+          <Typography>Friend invite 1</Typography>
+          <Typography>Friend invite 2</Typography>
+          <Typography>Friend invite 3</Typography>
+          <Typography>Friend invite 4</Typography>
+        </AccordionDetails>
+      </Accordion>
+    </>
   );
 };
 

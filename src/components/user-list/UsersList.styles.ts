@@ -6,7 +6,7 @@ export const Container = styled.div`
   flex: 0 0 300px;
   border: 2px solid black;
   background-color: #dedede;
-  padding: 10px 10px 10px 10px;
+  padding: 10px 0px 10px 10px;
 `;
 
 export const UsersListMessage = styled.div`
