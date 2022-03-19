@@ -2,10 +2,8 @@ import styled from 'styled-components';
 
 export const ChatMessagesContainer = styled.div`
   display: flex;
-  flex-grow: 1;
+  flex: 1;
   flex-direction: column;
-  justify-content: flex-end;
-  min-height: -webkit-min-content;
   padding: 10px 10px 10px 10px;
 `;
 
