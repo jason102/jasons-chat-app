@@ -5,6 +5,7 @@ import { set, ref } from 'firebase/database';
 import { AuthContext } from 'context/AuthContext';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
+import _debounce from 'lodash/debounce';
 
 const TYPING_DEBOUNCE_TIME = 1500;
 
@@ -15,8 +16,19 @@ const useSendMessages = () => {
   );
 
   const [textToSend, setTextToSend] = useState('');
+
   const isTyping = useRef(false);
-  const isTypingDebounceTimer = useRef(-1);
+  const isTypingDebounce = useRef(
+    _debounce(() => {
+      isTyping.current = false;
+
+      try {
+        set(conversationRef, false);
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    }, TYPING_DEBOUNCE_TIME)
+  );
 
   const otherUserId = userToChatWith.uid;
 
@@ -34,7 +46,7 @@ const useSendMessages = () => {
   useEffect(
     () => () => {
       if (isTyping.current) {
-        window.clearTimeout(isTypingDebounceTimer.current);
+        isTypingDebounce.current.cancel();
         isTyping.current = false;
 
         try {
@@ -61,16 +73,7 @@ const useSendMessages = () => {
       }
     }
 
-    window.clearTimeout(isTypingDebounceTimer.current);
-    isTypingDebounceTimer.current = window.setTimeout(() => {
-      isTyping.current = false;
-
-      try {
-        set(conversationRef, false);
-      } catch (error: any) {
-        console.log(error.message);
-      }
-    }, TYPING_DEBOUNCE_TIME);
+    isTypingDebounce.current();
   };
 
   const onSendMessage = async (e: React.FormEvent) => {
