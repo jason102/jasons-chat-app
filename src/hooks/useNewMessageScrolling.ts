@@ -1,4 +1,4 @@
-import { useRef, useEffect, useContext } from 'react';
+import { useRef, useEffect, useContext, UIEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { AuthContext } from 'context/AuthContext';
 import { RootState } from 'redux/store';
@@ -39,7 +39,7 @@ export const useNewMessageScrolling = () => {
     }
   }, [currentUserId, messages]);
 
-  const onScroll = (e: React.UIEvent<HTMLElement>) => {
+  const onScroll = (e: UIEvent<HTMLElement>) => {
     const divElement = e.currentTarget;
 
     if (

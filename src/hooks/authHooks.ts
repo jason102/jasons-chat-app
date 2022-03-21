@@ -3,7 +3,7 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { auth, firestoreDB } from 'firebaseConfig';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -54,7 +54,7 @@ export const useRegistration = () => {
     loading: false,
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     const { name, email, password } = formData;
@@ -114,7 +114,7 @@ export const useLogin = () => {
     loading: false,
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     const { email, password } = formData;

@@ -1,5 +1,12 @@
 import { addDoc, collection, Timestamp } from 'firebase/firestore';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  ChangeEvent,
+  FormEvent,
+} from 'react';
 import { firestoreDB, realtimeDB } from 'firebaseConfig';
 import { set, ref } from 'firebase/database';
 import { AuthContext } from 'context/AuthContext';
@@ -60,7 +67,7 @@ const useSendMessages = () => {
     [chatId]
   );
 
-  const onTextEntered = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onTextEntered = (e: ChangeEvent<HTMLInputElement>) => {
     setTextToSend(e.target.value);
 
     if (!isTyping.current) {
@@ -76,7 +83,7 @@ const useSendMessages = () => {
     isTypingDebounce.current();
   };
 
-  const onSendMessage = async (e: React.FormEvent) => {
+  const onSendMessage = async (e: FormEvent) => {
     e.preventDefault();
 
     if (textToSend.trim().length === 0) {

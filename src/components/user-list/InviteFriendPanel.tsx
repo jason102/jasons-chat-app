@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { ClosePanelHeader } from './InviteFriendPanel.styles';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
-  TextField,
-  IconButton,
-  Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from '@mui/material';
+  Container,
+  ClosePanelHeader,
+  InviteFriendContainer,
+} from './InviteFriendPanel.styles';
+import { TextField, IconButton, Typography } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 interface Props {
   toggleOpenInvitePanel: VoidFunction;
 }
 
 const InviteFriendPanel: React.FC<Props> = ({ toggleOpenInvitePanel }) => {
+  const onSearchFriend = (e: FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <>
+    <Container>
       <ClosePanelHeader>
         <IconButton onClick={toggleOpenInvitePanel} edge='start'>
           <ArrowBackIcon />
@@ -30,42 +31,19 @@ const InviteFriendPanel: React.FC<Props> = ({ toggleOpenInvitePanel }) => {
         Send a chat invite to any registered user by entering their email
         address:
       </Typography>
-      <TextField
-        sx={{ mt: 1 }}
-        label='Search conversations'
-        variant='outlined'
-        size='small'
-        fullWidth
-      />
-      <Accordion
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls='panel2a-content'
-          id='panel2a-header'
-        >
-          <Typography>Friend requests</Typography>
-        </AccordionSummary>
-        <AccordionDetails
-          sx={{
-            display: 'flex',
-            flex: 1,
-            flexDirection: 'column',
-            maxHeight: '200px',
-            overflowY: 'auto',
-          }}
-        >
-          <Typography>Friend invite 1</Typography>
-          <Typography>Friend invite 2</Typography>
-          <Typography>Friend invite 3</Typography>
-          <Typography>Friend invite 4</Typography>
-        </AccordionDetails>
-      </Accordion>
-    </>
+      <InviteFriendContainer onSubmit={onSearchFriend}>
+        <TextField
+          label={`Friend's email address`}
+          variant='outlined'
+          size='small'
+          fullWidth
+        />
+        <IconButton type='submit'>
+          <SearchIcon />
+        </IconButton>
+      </InviteFriendContainer>
+      {/* Collapse component that expands to show search result including user details like name */}
+    </Container>
   );
 };
 

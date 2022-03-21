@@ -35,9 +35,7 @@ const UsersList: React.FC = () => {
           users.push(rest as OtherUser);
         });
 
-        dispatch(
-          setMyFriends([...users, ...users, ...users, ...users, ...users])
-        );
+        dispatch(setMyFriends(users));
       }
     );
 
@@ -61,7 +59,7 @@ const UsersList: React.FC = () => {
             initial={{ opacity: 0, x: '-100%' }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '-100%' }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.23 }}
           >
             <InviteFriendPanel toggleOpenInvitePanel={toggleOpenInvitePanel} />
           </motion.div>
@@ -70,7 +68,7 @@ const UsersList: React.FC = () => {
             key='FriendsList'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.25, duration: 0.25 }}
+            transition={{ delay: 0.23, duration: 0.23 }}
           >
             <FriendsList toggleOpenInvitePanel={toggleOpenInvitePanel} />
           </motion.div>

@@ -1,5 +1,5 @@
 import { Link, Button } from '@mui/material';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Form,
@@ -16,7 +16,7 @@ const Login: React.FC = () => {
   const { formData, setFormData, handleSubmit } = useLogin();
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prevFormData: LoginFormData) => ({
       ...prevFormData,
       [e.target.name]: e.target.value,
