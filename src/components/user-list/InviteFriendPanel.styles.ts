@@ -10,7 +10,7 @@ export const Container = styled.div`
   padding-right: 10px;
 `;
 
-export const InviteFriendContainer = styled.form`
+export const InviteFriendForm = styled.form`
   display: flex;
   flex-direction: row;
   align-items: center;
