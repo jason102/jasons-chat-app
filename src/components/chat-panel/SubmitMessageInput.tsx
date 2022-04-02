@@ -1,7 +1,7 @@
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import React from 'react';
-import { Container, TextInput } from './SubmitMessageInput.styles';
+import { Container } from './SubmitMessageInput.styles';
 import useSendMessages from './useSendMessages';
 
 const SubmitMessageInput: React.FC = () => {
@@ -9,10 +9,11 @@ const SubmitMessageInput: React.FC = () => {
 
   return (
     <Container onSubmit={onSendMessage}>
-      <TextInput
+      <TextField
         onChange={onTextEntered}
         value={textToSend}
         placeholder='Message'
+        fullWidth
       />
       <Button variant='contained' type='submit' endIcon={<SendIcon />}>
         Send

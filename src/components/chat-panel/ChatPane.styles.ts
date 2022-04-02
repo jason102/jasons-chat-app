@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 export const ChatContainer = styled.div`
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
+  flex: 1;
+  height: 93vh;
 `;
 
 export const UserToChatWithName = styled.div`
@@ -16,12 +17,7 @@ export const UserToChatWithName = styled.div`
 `;
 
 export const ChatScrollWrapper = styled.div`
-  overflow: auto;
-`;
-
-export const SubmitFormContainer = styled.div`
-  display: flex;
   flex: 1;
-  flex-direction: column;
-  justify-content: flex-end;
+  overflow-y: scroll;
+  padding: 10px 10px 10px 10px;
 `;

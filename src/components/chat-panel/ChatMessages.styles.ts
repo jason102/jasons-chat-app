@@ -1,12 +1,5 @@
 import styled from 'styled-components';
 
-export const ChatMessagesContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 10px 10px 10px 10px;
-`;
-
 const Message = styled.div`
   border: 2px solid black;
   border-radius: 7px;

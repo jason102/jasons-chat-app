@@ -14,8 +14,8 @@ import store from 'redux/store';
 
 const App: React.FC = () => (
   <Provider store={store}>
-    <AuthProvider>
-      <AppContainer>
+    <AppContainer>
+      <AuthProvider>
         <BrowserRouter>
           <NavigationBar />
           <Routes>
@@ -46,8 +46,8 @@ const App: React.FC = () => (
             <Route path='/about' element={<About />} />
           </Routes>
         </BrowserRouter>
-      </AppContainer>
-    </AuthProvider>
+      </AuthProvider>
+    </AppContainer>
   </Provider>
 );
 

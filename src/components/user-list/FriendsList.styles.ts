@@ -11,7 +11,6 @@ export const ScrollContainer = styled.div`
   flex-direction: column;
   margin-top: 10px;
   overflow: auto;
-  height: 87vh;
 `;
 
 export const List = styled.div`

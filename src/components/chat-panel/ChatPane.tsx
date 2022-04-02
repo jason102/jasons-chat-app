@@ -9,7 +9,6 @@ import {
   ChatScrollWrapper,
   ChatContainer,
   UserToChatWithName,
-  SubmitFormContainer,
 } from './ChatPane.styles';
 import SubmitMessageInput from './SubmitMessageInput';
 
@@ -35,10 +34,8 @@ const ChatPane: React.FC = () => {
             <ChatMessages />
             <div ref={scrollRef} />
           </ChatScrollWrapper>
-          <SubmitFormContainer>
-            {otherPersonIsTyping && <BouncingDots />}
-            <SubmitMessageInput />
-          </SubmitFormContainer>
+          {otherPersonIsTyping && <BouncingDots />}
+          <SubmitMessageInput />
         </>
       )}
     </ChatContainer>
