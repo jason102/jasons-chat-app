@@ -4,12 +4,17 @@ import {
   Container,
   ClosePanelHeader,
   InviteFriendForm,
+  SearchButtonContainer,
+  SearchResultContainer,
+  FoundUserContainer,
 } from './InviteFriendPanel.styles';
 import {
   TextField,
   IconButton,
   Typography,
   CircularProgress,
+  Collapse,
+  Button,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { getDocs, query, collection, where } from 'firebase/firestore';
@@ -23,6 +28,7 @@ interface Props {
 const InviteFriendPanel: React.FC<Props> = ({ toggleOpenInvitePanel }) => {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [foundUser, setFoundUser] = useState<OtherUser | null>(null);
+  const [showSearchResult, setShowSearchResult] = useState(false);
   const [searchUserError, setSearchUserError] = useState('');
   const [isSearchingUser, setIsSearchingUser] = useState(false);
 
@@ -54,10 +60,14 @@ const InviteFriendPanel: React.FC<Props> = ({ toggleOpenInvitePanel }) => {
 
       if (queriedUsers.length > 0) {
         setFoundUser(queriedUsers[0]);
+        setSearchUserError('');
       } else {
-        setSearchUserError('User does not exist');
+        setSearchUserError(
+          'User does not exist. Is the email address correct?'
+        );
       }
 
+      setShowSearchResult(true);
       setIsSearchingUser(false);
     } catch (e) {
       console.log('Error searching for user: ', e);
@@ -65,8 +75,7 @@ const InviteFriendPanel: React.FC<Props> = ({ toggleOpenInvitePanel }) => {
   };
 
   const onEmailEntered = (e: ChangeEvent<HTMLInputElement>) => {
-    setFoundUser(null);
-    setSearchUserError('');
+    setShowSearchResult(false);
     setEnteredEmail(e.target.value);
   };
 
@@ -76,11 +85,9 @@ const InviteFriendPanel: React.FC<Props> = ({ toggleOpenInvitePanel }) => {
         <IconButton onClick={toggleOpenInvitePanel} edge='start'>
           <ArrowBackIcon />
         </IconButton>
-        <Typography id='modal-modal-title' variant='h6' component='h2'>
-          Add a friend
-        </Typography>
+        <Typography variant='h6'>Add a friend</Typography>
       </ClosePanelHeader>
-      <Typography id='modal-modal-description' sx={{ mt: 2 }}>
+      <Typography sx={{ mt: 2 }}>
         Send a chat invite to any registered user by entering their email
         address:
       </Typography>
@@ -95,15 +102,34 @@ const InviteFriendPanel: React.FC<Props> = ({ toggleOpenInvitePanel }) => {
           error={!!searchUserError}
           disabled={isSearchingUser}
         />
-        {isSearchingUser ? (
-          <CircularProgress size={20} />
-        ) : (
-          <IconButton type='submit'>
-            <SearchIcon />
-          </IconButton>
-        )}
+        <SearchButtonContainer>
+          {isSearchingUser ? (
+            <CircularProgress size={20} />
+          ) : (
+            <IconButton type='submit'>
+              <SearchIcon />
+            </IconButton>
+          )}
+        </SearchButtonContainer>
       </InviteFriendForm>
-      {foundUser && <Typography>{foundUser.name}</Typography>}
+      <Collapse in={showSearchResult}>
+        <SearchResultContainer>
+          {searchUserError ? (
+            <Typography variant='caption' sx={{ color: '#D32F2F' }}>
+              {searchUserError}
+            </Typography>
+          ) : (
+            <>
+              <FoundUserContainer>
+                <Typography noWrap>{foundUser?.name}</Typography>
+              </FoundUserContainer>
+              <Button size='small' variant='outlined'>
+                Invite
+              </Button>
+            </>
+          )}
+        </SearchResultContainer>
+      </Collapse>
       {/* Collapse component that expands to show search result including user details like name */}
     </Container>
   );

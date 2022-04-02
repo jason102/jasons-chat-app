@@ -16,3 +16,24 @@ export const InviteFriendForm = styled.form`
   align-items: center;
   padding-top: 10px;
 `;
+
+export const SearchButtonContainer = styled.div`
+  width: 47px;
+  display: flex;
+  justify-content: center;
+`;
+
+export const SearchResultContainer = styled.div`
+  display: flex;
+  padding-top: 10px;
+`;
+
+export const FoundUserContainer = styled.div`
+  display: flex;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 5px;
+  align-self: center;
+`;
