@@ -24,6 +24,16 @@ const useSendMessages = () => {
 
   const [textToSend, setTextToSend] = useState('');
 
+  const otherUserId = userToChatWith.uid;
+  const chatId =
+    currentUserId > otherUserId
+      ? currentUserId + otherUserId
+      : otherUserId + currentUserId;
+  const conversationRef = ref(
+    realtimeDB,
+    'conversations/' + chatId + '/' + currentUserId + '_isTyping'
+  );
+
   const isTyping = useRef(false);
   const isTypingDebounce = useRef(
     _debounce(() => {
@@ -35,18 +45,6 @@ const useSendMessages = () => {
         console.log(error.message);
       }
     }, TYPING_DEBOUNCE_TIME)
-  );
-
-  const otherUserId = userToChatWith.uid;
-
-  const chatId =
-    currentUserId > otherUserId
-      ? currentUserId + otherUserId
-      : otherUserId + currentUserId;
-
-  const conversationRef = ref(
-    realtimeDB,
-    'conversations/' + chatId + '/' + currentUserId + '_isTyping'
   );
 
   // Set the user to not be typing on component unmount or when they select a different user to chat with
