@@ -4,7 +4,6 @@ export const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 93vh;
 `;
 
 export const UserToChatWithName = styled.div`
