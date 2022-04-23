@@ -5,12 +5,14 @@ import Login from './Login';
 jest.mock('firebase/app');
 jest.mock('firebase/auth');
 jest.mock('firebase/firestore');
+jest.mock('firebase/database');
 
 const mockedUseNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),
   useNavigate: () => mockedUseNavigate,
+  useLocation: () => jest.fn(),
 }));
 
 describe('Login page', () => {
@@ -61,7 +63,7 @@ describe('Login page', () => {
 
     await waitFor(() => {
       expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-      expect(mockedUseNavigate).toBeCalledWith('/');
+      expect(mockedUseNavigate).toBeCalledWith('/', { replace: true });
     });
   });
 

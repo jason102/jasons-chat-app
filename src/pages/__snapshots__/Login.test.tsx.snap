@@ -30,6 +30,7 @@ exports[`Login page renders 1`] = `
           >
             <input
               aria-invalid="false"
+              autocomplete="email"
               class="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               id="mui-1"
               name="email"
@@ -70,6 +71,7 @@ exports[`Login page renders 1`] = `
           >
             <input
               aria-invalid="false"
+              autocomplete="current-password"
               class="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               id="mui-2"
               name="password"
