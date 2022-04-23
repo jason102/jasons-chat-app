@@ -118,7 +118,6 @@ export const useLogin = () => {
     e.preventDefault();
 
     const { email, password } = formData;
-
     if (!email || !password) {
       setFormData((prevFormData) => ({
         ...prevFormData,

@@ -8,7 +8,11 @@ export const AuthContext = createContext<{
   currentUserId: string;
 }>({ currentUser: null, currentUserId: '' });
 
-const AuthProvider: React.FC = ({ children }) => {
+interface Props {
+  children?: React.ReactNode;
+}
+
+const AuthProvider: React.FC<Props> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [currentUserId, setCurrentUserId] = useState('');
 
