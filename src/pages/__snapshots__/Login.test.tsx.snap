@@ -3,22 +3,22 @@
 exports[`Login page renders 1`] = `
 <DocumentFragment>
   <section
-    class="sc-bczRLJ knpdhv"
+    class="sc-bcXHqe dBnoDu"
   >
     <h3>
       Welcome! Please login:
     </h3>
     <form
-      class="sc-gsnTZi gpjAxk"
+      class="sc-gswNZR eXLFlH"
     >
       <div
-        class="sc-dkzDqf fZpcrn"
+        class="sc-dkrFOg leTtXt"
       >
         <div
-          class="MuiFormControl-root MuiTextField-root sc-hKMtZM bTBrVv css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+          class="MuiFormControl-root MuiTextField-root sc-hLBbgP cHttSm css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
         >
           <label
-            class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="false"
             for=":r0:"
             id=":r0:-label"
@@ -26,12 +26,12 @@ exports[`Login page renders 1`] = `
             Email
           </label>
           <div
-            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
           >
             <input
               aria-invalid="false"
               autocomplete="email"
-              class="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+              class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               id=":r0:"
               name="email"
               type="text"
@@ -42,7 +42,7 @@ exports[`Login page renders 1`] = `
               class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
             >
               <legend
-                class="css-1ftyaf0"
+                class="css-yjsfm1"
               >
                 <span>
                   Email
@@ -53,13 +53,13 @@ exports[`Login page renders 1`] = `
         </div>
       </div>
       <div
-        class="sc-dkzDqf fZpcrn"
+        class="sc-dkrFOg leTtXt"
       >
         <div
-          class="MuiFormControl-root MuiTextField-root sc-hKMtZM bTBrVv css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+          class="MuiFormControl-root MuiTextField-root sc-hLBbgP cHttSm css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
         >
           <label
-            class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="false"
             for=":r1:"
             id=":r1:-label"
@@ -67,12 +67,12 @@ exports[`Login page renders 1`] = `
             Password
           </label>
           <div
-            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+            class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
           >
             <input
               aria-invalid="false"
               autocomplete="current-password"
-              class="MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+              class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               id=":r1:"
               name="password"
               type="password"
@@ -83,7 +83,7 @@ exports[`Login page renders 1`] = `
               class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
             >
               <legend
-                class="css-1ftyaf0"
+                class="css-yjsfm1"
               >
                 <span>
                   Password
@@ -94,10 +94,10 @@ exports[`Login page renders 1`] = `
         </div>
       </div>
       <div
-        class="sc-eCYdqJ eNYlpP"
+        class="sc-eDvSVe jONXSr"
       >
         <button
-          class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeLarge MuiButton-textSizeLarge MuiButtonBase-root  css-kpm0tx-MuiButtonBase-root-MuiButton-root"
+          class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeLarge MuiButton-textSizeLarge MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeLarge MuiButton-textSizeLarge css-kpm0tx-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="submit"
         >
@@ -109,7 +109,7 @@ exports[`Login page renders 1`] = `
       </div>
     </form>
     <div
-      class="sc-gKXOVf kckMVu"
+      class="sc-gKPRtg fnFZvH"
     >
       Don't have an account? Please 
       <a
